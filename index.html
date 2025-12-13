@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giới Thiệu Nhóm 1</title>
+    <title>Kiến Thức Cloud Computing & Bảo Mật - Nhóm 1</title>
     <style>
         * {
             margin: 0;
@@ -19,44 +19,153 @@
             min-height: 100vh;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: #f8f9ff;
+            color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .nav-text {
+            font-weight: 500;
+        }
+
+        .main-content-area {
+            flex: 1;
+            margin-left: 280px;
             padding: 20px;
         }
 
-        .header {
+        .content-header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             text-align: center;
-            color: white;
-            margin-bottom: 50px;
-            padding: 40px 0;
         }
 
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        .content-header h1 {
+            font-size: 2.5rem;
             color: #333;
+            margin-bottom: 10px;
         }
 
-        .header p {
+        .content-header p {
             font-size: 1.2rem;
-            opacity: 0.9;
+            color: #666;
+        }
+
+        .main-content-wrapper {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .content-page {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .content-page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-section {
+            margin-bottom: 40px;
+        }
+
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
         }
 
         .team-section {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            margin-top: 40px;
+            margin-top: 20px;
         }
 
         .member-card {
-            background: white;
+            background: #f8f9fa;
             border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
             position: relative;
             overflow: hidden;
         }
@@ -67,49 +176,47 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 5px;
+            height: 4px;
             background: linear-gradient(90deg, #667eea, #764ba2);
         }
 
         .member-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
 
         .member-avatar {
-            width: 120px;
-            height: 120px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: linear-gradient(135deg, #667eea, #764ba2);
-            margin: 0 auto 20px;
+            margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
-            border: 4px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .member-name {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             font-weight: bold;
         }
 
         .member-role {
             text-align: center;
             color: #667eea;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
+            font-size: 1rem;
+            margin-bottom: 15px;
             font-weight: 600;
         }
 
         .member-info {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .member-info label {
@@ -123,154 +230,545 @@
             color: #666;
         }
 
-        .member-skills {
-            margin-top: 20px;
+        .highlight-box {
+            background: linear-gradient(135deg, #f8f9ff, #f0f2ff);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
         }
 
-        .member-skills h4 {
+        .highlight-box h3 {
             color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .highlight-box h4 {
+            color: #555;
             margin-bottom: 10px;
             font-size: 1.1rem;
         }
 
-        .skills-list {
+        .highlight-box p {
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .highlight-box ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .highlight-box li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .pagination {
             display: flex;
-            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 40px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
             gap: 8px;
         }
 
-        .skill-tag {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
+        .nav-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        .footer {
-            text-align: center;
-            color: rgb(24, 23, 23);
-            margin-top: 60px;
-            padding: 30px 0;
-            border-top: 1px solid rgba(255,255,255,0.2);
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .page-indicator {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .page-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-dot.active {
+            background: #667eea;
+            transform: scale(1.2);
+        }
+
+        .page-info {
+            color: #666;
+            font-weight: 500;
+            margin: 0 15px;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         @media (max-width: 768px) {
-            .header h1 {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .main-content-area {
+                margin-left: 0;
+                padding: 70px 15px 15px;
+            }
+
+            .content-header {
+                padding: 20px;
+            }
+
+            .content-header h1 {
                 font-size: 2rem;
             }
-            
+
+            .content-page {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
             .team-section {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
-            
+
             .member-card {
                 padding: 20px;
             }
-            
-            .container {
-                padding: 15px;
+
+            .pagination {
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .page-indicator {
+                order: -1;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>NHÓM 1</h1>
-        </header>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
 
-        <main class="team-section">
-            <!-- Thành viên 1 -->
-            <div class="member-card">
-                <div class="member-avatar">AT</div>
-                <h2 class="member-name">Nguyễn Anh Tuấn</h2>
-                <p class="member-role">22004004</p>
-      
-                <div class="member-info">
-                    <label>Chuyên ngành:</label>
-                    <span>An toàn an ninh thông tin</span>
-                </div>
-                
-                <div class="member-info">
-                    <label>Email:</label>
-                    <span>22004004@st.vlute.edu.vn</span>
-                </div>
-                
-                <!-- <div class="member-skills">
-                    <h4>Kỹ năng:</h4>
-                    <div class="skills-list">
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">MongoDB</span>
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3>NHÓM 1</h3>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a class="nav-link active" onclick="showPage(0)">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Giới Thiệu Thành Viên</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="showPage(1)">
+                    <span class="nav-icon">☁️</span>
+                    <span class="nav-text">Cloud Computing</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="showPage(2)">
+                    <span class="nav-icon">🌐</span>
+                    <span class="nav-text">CDN & Hiệu Năng</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="showPage(3)">
+                    <span class="nav-icon">🔒</span>
+                    <span class="nav-text">Bảo Mật & Rủi Ro</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="showPage(4)">
+                    <span class="nav-icon">✅</span>
+                    <span class="nav-text">Giải Pháp Bảo Mật</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="showPage(5)">
+                    <span class="nav-icon">🔍</span>
+                    <span class="nav-text">Kiểm Tra An Toàn</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" onclick="showPage(6)">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Workflow Chi Tiết</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="main-content-area">
+        <div class="content-header">
+            <h1>KIẾN THỨC CLOUD COMPUTING & BẢO MẬT</h1>
+            <p>Tài liệu hướng dẫn về an toàn an ninh thông tin trong môi trường cloud</p>
+        </div>
+
+        <div class="main-content-wrapper">
+            <!-- Page 0: Team Introduction -->
+            <div class="content-page active" id="page-0">
+                <div class="content-section">
+                    <h2 class="section-title">👥 Giới Thiệu Thành Viên</h2>
+                    <div class="team-section">
+                        <!-- Thành viên 1 -->
+                        <div class="member-card">
+                            <div class="member-avatar">AT</div>
+                            <h2 class="member-name">Nguyễn Anh Tuấn</h2>
+                            <p class="member-role">22004004</p>
+                            <div class="member-info">
+                                <label>Chuyên ngành:</label>
+                                <span>An toàn an ninh thông tin</span>
+                            </div>
+                            <div class="member-info">
+                                <label>Email:</label>
+                                <span>22004004@st.vlute.edu.vn</span>
+                            </div>
+                        </div>
+
+                        <!-- Thành viên 2 -->
+                        <div class="member-card">
+                            <div class="member-avatar">HA</div>
+                            <h2 class="member-name">Trần Đại Triệu Hào Anh</h2>
+                            <p class="member-role">22004009</p>
+                            <div class="member-info">
+                                <label>Chuyên ngành:</label>
+                                <span>An toàn an ninh thông tin</span>
+                            </div>
+                            <div class="member-info">
+                                <label>Email:</label>
+                                <span>22004009@st.vlute.edu.vn</span>
+                            </div>
+                        </div>
+
+                        <!-- Thành viên 3 -->
+                        <div class="member-card">
+                            <div class="member-avatar">TK</div>
+                            <h2 class="member-name">Đặng Tuấn Kiệt</h2>
+                            <p class="member-role">22004278</p>
+                            <div class="member-info">
+                                <label>Chuyên ngành:</label>
+                                <span>An toàn an ninh thông tin</span>
+                            </div>
+                            <div class="member-info">
+                                <label>Email:</label>
+                                <span>22004278@st.vlute.edu.vn</span>
+                            </div>
+                        </div>
                     </div>
-                </div> -->
+                </div>
             </div>
 
-            <!-- Thành viên 2 -->
-            <div class="member-card">
-                <div class="member-avatar">HA</div>
-                <h2 class="member-name">Trần Đại Triệu Hào Anh</h2>
-                <p class="member-role">22004009</p>
-                                
-                <div class="member-info">
-                    <label>Chuyên ngành:</label>
-                    <span>An toàn an ninh thông tin</span>
-                </div>
-                                
-                <div class="member-info">
-                    <label>Email:</label>
-                    <span>22004009@st.vlute.edu.vn</span>
-                </div>
-                
-                <!-- <div class="member-skills">
-                    <h4>Kỹ năng:</h4>
-                    <div class="skills-list">
-                        <span class="skill-tag">Figma</span>
-                        <span class="skill-tag">Adobe XD</span>
-                        <span class="skill-tag">Photoshop</span>
-                        <span class="skill-tag">Illustrator</span>
-                        <span class="skill-tag">UI Design</span>
+            <!-- Page 1: Cloud Computing Basics -->
+            <div class="content-page" id="page-1">
+                <div class="content-section">
+                    <h2 class="section-title">☁️ Kiến Thức Cloud Computing</h2>
+                    
+                    <div class="highlight-box">
+                        <h3>1) Cloud Computing là gì?</h3>
+                        <p>Cloud computing = dùng dịch vụ máy tính (lưu trữ, phần mềm, database, máy chủ…) chạy trên máy chủ từ xa qua Internet thay vì cài trên máy tính cá nhân hay máy chủ nội bộ.</p>
+                        <p><strong>Lợi ích:</strong> dễ mở rộng (scale), tiết kiệm chi phí và quản lý tập trung</p>
                     </div>
-                </div> -->
+
+                    <div class="highlight-box">
+                        <h3>2) IaaS / PaaS / SaaS khác nhau như thế nào?</h3>
+                        <ul>
+                            <li><strong>IaaS (Infrastructure as a Service):</strong> nhà cung cấp cho bạn hạ tầng (máy ảo, storage, mạng). Bạn quản lý hệ điều hành, ứng dụng. Ví dụ: thuê VM, block storage.</li>
+                            <li><strong>PaaS (Platform as a Service):</strong> nhà cung cấp cho nền tảng để dev + deploy (runtime, build tools). Bạn chỉ lo code. Ví dụ: dịch vụ hosting app, serverless platforms.</li>
+                            <li><strong>SaaS (Software as a Service):</strong> phần mềm dùng ngay do nhà cung cấp vận hành (email, CRM, Office online). Người dùng chỉ dùng/chạy, không quản lý hạ tầng.</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h3>3) Website tĩnh thuộc mô hình nào trong cloud?</h3>
+                        <p>Website tĩnh (HTML/CSS/JS không cần server-side rendering) thường được triển khai trên dịch vụ hosting tĩnh / JAMstack — về ý nghĩa gần với PaaS / serverless static hosting (như Cloudflare Pages, Netlify, GitHub Pages). Ngoài ra nội dung tĩnh thường được phân phối qua CDN để đạt tốc độ cao.</p>
+                    </div>
+                </div>
             </div>
 
-            <!-- Thành viên 3 -->
-            <div class="member-card">
-                <div class="member-avatar">TK</div>
-                <h2 class="member-name">Đặng Tuấn Kiệt</h2>
-                <p class="member-role">22004278</p>
-
-                <div class="member-info">
-                    <label>Chuyên ngành:</label>
-                    <span>An toàn an ninh thông tin</span>
-                </div>
-                
-                <div class="member-info">
-                    <label>Email:</label>
-                    <span>22004278@st.vlute.edu.vn</span>
-                </div>
-                
-                <!-- <div class="member-skills">
-                    <h4>Kỹ năng:</h4>
-                    <div class="skills-list">
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">Spring Boot</span>
-                        <span class="skill-tag">PostgreSQL</span>
-                        <span class="skill-tag">Redis</span>
-                        <span class="skill-tag">Docker</span>
+            <!-- Page 2: CDN & Performance -->
+            <div class="content-page" id="page-2">
+                <div class="content-section">
+                    <h2 class="section-title">🌐 CDN & Hiệu Năng</h2>
+                    
+                    <div class="highlight-box">
+                        <h3>4) Cloudflare Pages hoạt động theo cơ chế gì?</h3>
+                        <p>Bạn kết nối repo Git (GitHub/GitLab). Khi push code, Pages tự build (hoặc bạn upload asset đã build) và triển khai lên mạng biên (edge network) của Cloudflare.</p>
+                        <p>Pages hỗ trợ cả site tĩnh và "Pages Functions" (chạy mã nhẹ ở edge bằng Workers) để xử lý chút logic động mà không cần server truyền thống.</p>
                     </div>
-                </div> -->
-            </div>
-        </main>
 
-        <footer class="footer">
-            <p>&copy; 2025 Nhóm 1.</p>
-        </footer>
+                    <div class="highlight-box">
+                        <h3>5) CDN phân phối nội dung ra sao?</h3>
+                        <p>CDN là mạng máy chủ phân tán theo địa lý (POP/edge). Khi người dùng yêu cầu nội dung, CDN trả bản copy đã cache từ edge gần nhất, giảm độ trễ so với truy vấn origin server xa. Nếu edge không có, CDN sẽ lấy từ origin rồi cache để phục vụ lần sau. Đây là cách CDN phân phối và giảm tải cho origin.</p>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h3>6) CDN có vai trò gì đối với hiệu năng và an toàn?</h3>
+                        <p><strong>Hiệu năng:</strong> giảm độ trễ (latency), tăng tốc tải trang, giảm băng thông cho origin, cải thiện trải nghiệm người dùng toàn cầu.</p>
+                        <p><strong>An toàn:</strong> nhiều CDN (như Cloudflare) có thêm lớp DDoS protection, WAF (Web Application Firewall), TLS/HTTPS, bot management — giúp giảm tấn công và chặn request độc hại trước khi tới origin. Tuy nhiên CDN không thay thế mọi biện pháp bảo mật.</p>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h3>7) Ví dụ minh họa</h3>
+                        <p>Người dùng ở Hà Nội truy cập example.com/image.jpg → DNS + CDN chọn POP (edge) gần VN → trả image.jpg từ edge (không phải từ Mỹ). Lần đầu edge chưa có sẽ lấy từ origin, nhưng các lần sau sẽ được phục vụ nhanh hơn nhiều.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 3: Security & Risks -->
+            <div class="content-page" id="page-3">
+                <div class="content-section">
+                    <h2 class="section-title">🔒 Bảo Mật & Rủi Ro</h2>
+                    
+                    <div class="highlight-box">
+                        <h3>8) Những rủi ro bảo mật còn tồn tại?</h3>
+                        <p>Dù dùng cloud + CDN, vẫn còn rủi ro chính:</p>
+                        <ul>
+                            <li>Lỗ hổng ứng dụng web (SQLi, XSS, broken auth — OWASP Top 10).</li>
+                            <li>Cấu hình sai (misconfiguration): bucket public, header sai, SSL sai.</li>
+                            <li>Rò rỉ dữ liệu / quản lý quyền kém: IAM bị lỏng/lạm quyền.</li>
+                            <li>Cache poisoning / stale content nếu cache không cấu hình đúng.</li>
+                            <li>Phụ thuộc nhà cung cấp (vendor risk) / downtime.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 4: Security Solutions -->
+            <div class="content-page" id="page-4">
+                <div class="content-section">
+                    <h2 class="section-title">✅ Giải Pháp Bảo Mật</h2>
+                    
+                    <div class="highlight-box">
+                        <h3>9) Giải pháp (các bước thực tế dễ làm, ưu tiên theo thứ tự)</h3>
+                        <ul>
+                            <li>HTTPS + HSTS: bắt buộc, không dùng HTTP.</li>
+                            <li>WAF + Rate limiting: bật firewall, giới hạn tần suất truy cập để chống bot/DDoS.</li>
+                            <li>Quy tắc access / IAM chặt chẽ: chỉ cấp quyền cần thiết (least privilege). Dùng MFA cho tài khoản quản trị.</li>
+                            <li>Cấu hình cache đúng: set đúng Cache-Control, TTL, tránh cache dữ liệu nhạy cảm.</li>
+                            <li>Patch/update & dependency scanning: cập nhật thư viện, quét lỗ hổng.</li>
+                            <li>Kiểm thử ứng dụng + tuân thủ OWASP: chạy SAST/DAST, kiểm tra OWASP Top 10.</li>
+                            <li>Giám sát & logging: bật log truy cập, cảnh báo bất thường, phân tích traffic.</li>
+                            <li>Chuẩn bị fallback/đa vùng: nếu hệ thống quan trọng, cân nhắc multi-CDN hoặc backup origin.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 5: Security Audit -->
+            <div class="content-page" id="page-5">
+                <div class="content-section">
+                    <h2 class="section-title">🔍 Quy Trình Kiểm Tra An Toàn</h2>
+                    
+                    <div class="highlight-box">
+                        <h3>Mục tiêu của quy trình kiểm tra an toàn</h3>
+                        <ul>
+                            <li>Xác định các lỗ hổng dễ khai thác (cấu hình sai header, TLS, XSS, v.v.).</li>
+                            <li>Đánh giá hiệu năng & trải nghiệm người dùng (vì performance ảnh hưởng tới an toàn vận hành và khả năng chịu tải).</li>
+                            <li>Kiểm tra chuỗi cung ứng phần mềm (thư viện/ dependency có lỗ hổng).</li>
+                            <li>Đề xuất hành động khắc phục, ưu tiên theo rủi ro.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page 6: Detailed Workflow -->
+            <div class="content-page" id="page-6">
+                <div class="content-section">
+                    <h2 class="section-title">⚙️ Workflow Chi Tiết</h2>
+                    
+                    <div class="highlight-box">
+                        <h3>Quy trình kiểm tra (workflow chi tiết — bước theo thứ tự)</h3>
+                        
+                        <h4>1. Lập kế hoạch & phạm vi</h4>
+                        <p>Xác định endpoints, sitemap, repo code, thông tin chứng thực test (account thử nghiệm). Ghi rõ mức độ rủi ro chấp nhận được.</p>
+
+                        <h4>2. Thu thập thông tin (reconnaissance)</h4>
+                        <p>Lấy danh sách URL, header hiện tại, DNS, CDN/edge location, assets lớn.</p>
+
+                        <h4>3. Kiểm tra cấu hình nhanh (automated smoke tests)</h4>
+                        <ul>
+                            <li>Chạy SecurityHeaders để xem header thiếu/bất thường.</li>
+                            <li>Chạy PageSpeed/Lighthouse để lấy baseline hiệu năng và Core Web Vitals.</li>
+                        </ul>
+
+                        <h4>4. Kiểm tra lỗ hổng động & tĩnh</h4>
+                        <ul>
+                            <li>Dùng SAST/Code scanning (GitHub Advanced Security / code scanning) + Dependabot để check dependency.</li>
+                            <li>Dùng DAST nhẹ (burp/OWASP ZAP) để quét OWASP Top 10 (XSS, CSRF, auth issues).</li>
+                        </ul>
+
+                        <h4>5. Kiểm tra chính sách caching / CDN</h4>
+                        <p>Xem các header Cache-Control, TTL, và cách CDN (Cloudflare) cấu hình cache (tiered cache, cache rules). Sai cấu hình có thể gây leak dữ liệu nhạy cảm hoặc serving stale content.</p>
+
+                        <h4>6. Kiểm tra bảo mật transport</h4>
+                        <p>Kiểm tra TLS version, ciphers, HSTS; test redirect từ HTTP → HTTPS.</p>
+
+                        <h4>7. Kiểm tra an ninh biên (edge)</h4>
+                        <p>Kiểm tra WAF rules, rate-limiting, bot management (trên Cloudflare hoặc CDN tương tự).</p>
+
+                        <h4>8. Tổng hợp kết quả & phân loại rủi ro</h4>
+                        <p>Ghi issue, mức độ (High / Medium / Low), reproduce steps, ảnh chụp/ logs, đề xuất fix.</p>
+
+                        <h4>9. Remediation & re-test</h4>
+                        <p>Dev áp fix, deploy, clear cache/edge, re-run automated tests để confirm.</p>
+
+                        <h4>10. Giám sát liên tục</h4>
+                        <p>Bật logging, alert, RASP/WAF dashboard và periodic scans; tích hợp vào CI (Dependabot + code scanning bàn giao alert tới team).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="nav-btn" id="prevBtn" onclick="changePage(-1)">
+                    ← Trước
+                </button>
+                <div class="page-indicator">
+                    <div class="page-dot active" onclick="showPage(0)"></div>
+                    <div class="page-dot" onclick="showPage(1)"></div>
+                    <div class="page-dot" onclick="showPage(2)"></div>
+                    <div class="page-dot" onclick="showPage(3)"></div>
+                    <div class="page-dot" onclick="showPage(4)"></div>
+                    <div class="page-dot" onclick="showPage(5)"></div>
+                    <div class="page-dot" onclick="showPage(6)"></div>
+                </div>
+                <div class="page-info">
+                    <span id="pageInfo">1 / 7</span>
+                </div>
+                <button class="nav-btn" id="nextBtn" onclick="changePage(1)">
+                    Tiếp →
+                </button>
+            </div>
+        </div>
     </div>
+
+    <script>
+        let currentPage = 0;
+        const totalPages = 7;
+
+        function showPage(pageIndex) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.content-page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(`page-${pageIndex}`).classList.add('active');
+            
+            // Update navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            navLinks[pageIndex].classList.add('active');
+            
+            // Update pagination dots
+            const dots = document.querySelectorAll('.page-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === pageIndex);
+            });
+            
+            // Update page info
+            document.getElementById('pageInfo').textContent = `${pageIndex + 1} / ${totalPages}`;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = pageIndex === 0;
+            document.getElementById('nextBtn').disabled = pageIndex === totalPages - 1;
+            
+            currentPage = pageIndex;
+            
+            // Close sidebar on mobile after navigation
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('active');
+            }
+        }
+
+        function changePage(direction) {
+            const newPage = currentPage + direction;
+            if (newPage >= 0 && newPage < totalPages) {
+                showPage(newPage);
+            }
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changePage(-1);
+            if (e.key === 'ArrowRight') changePage(1);
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(e.target) && 
+                !menuBtn.contains(e.target) &&
+                sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Initialize
+        showPage(0);
+    </script>
 </body>
 </html>
