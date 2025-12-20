@@ -1,14 +1,6 @@
-# Cloudflare Pages response security headers
-
-# Note: Content-Security-Policy contains 'unsafe-inline' because this site uses inline <style> and inline <script>.
-
-/\*
-Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; upgrade-insecure-requests
+Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
 X-Frame-Options: DENY
 X-Content-Type-Options: nosniff
-Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: geolocation=(self), microphone=(), camera=()
-Cross-Origin-Opener-Policy: same-origin
-Cross-Origin-Resource-Policy: same-origin
-X-Permitted-Cross-Domain-Policies: none
+Referrer-Policy: no-referrer-when-downgrade
+Permissions-Policy: geolocation=(), midi=(), sync-xhr=(), microphone=(), camera=(), magnetometer=(), gyroscope=(), fullscreen=(self), payment=()
+Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self';
