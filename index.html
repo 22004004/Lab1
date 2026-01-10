@@ -3,776 +3,888 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Security headers (HSTS/CSP/XFO/Permissions-Policy/...) must be set as HTTP response headers.
-         For Cloudflare Pages, configure them in the `_headers` file at the project root. -->
-    <title>Kiến Thức Cloud Computing & Bảo Mật - Nhóm 1</title>
+    <title>Portfolio: Cloud Computing & Bảo Mật Labs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Biến cho chế độ sáng/tối */
+        :root {
+            /* Chế độ sáng */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-card: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #34495e;
+            --text-muted: #7f8c8d;
+            --border-color: #e9ecef;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        /* Chế độ tối */
+        [data-theme="dark"] {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-card: #0f3460;
+            --text-primary: #e6e6e6;
+            --text-secondary: #cccccc;
+            --text-muted: #a8a8a8;
+            --border-color: #2a3b5c;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --primary: #4d96ff;
+            --secondary: #e94560;
+            --accent: #ff9a3c;
+            --success: #6bc46d;
+            --warning: #ffc93c;
+        }
+        
+        /* Các style cơ bản */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-
+        
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #f0f0f3 0%, #f2f2f4 100%);
-            min-height: 100vh;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-
-        .layout {
-            display: flex;
-            min-height: 100vh;
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-
-        .sidebar {
-            width: 280px;
-            background: white;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 1000;
-            transition: transform 0.3s ease;
+        
+        section {
+            padding: 80px 0;
         }
-
-        .sidebar-header {
-            padding: 30px 20px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            text-align: center;
+        
+        h1, h2, h3, h4 {
+            color: var(--text-primary);
+            margin-bottom: 20px;
         }
-
-        .sidebar-header h3 {
-            margin: 0;
-            font-size: 1.3rem;
-        }
-
-        .nav-menu {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .nav-item {
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 20px;
-            text-decoration: none;
-            color: #333;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .nav-link:hover {
-            background: #f8f9ff;
-            color: #667eea;
-            transform: translateX(5px);
-        }
-
-        .nav-link.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .nav-icon {
-            font-size: 1.5rem;
-            margin-right: 15px;
-            width: 30px;
-            text-align: center;
-        }
-
-        .nav-text {
-            font-weight: 500;
-        }
-
-        .main-content-area {
-            flex: 1;
-            margin-left: 280px;
-            padding: 20px;
-        }
-
-        .content-header {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .content-header h1 {
-            font-size: 2.5rem;
-            color: #333;
+        
+        h1 {
+            font-size: 2.8rem;
             margin-bottom: 10px;
         }
-
-        .content-header p {
-            font-size: 1.2rem;
-            color: #666;
-        }
-
-        .main-content-wrapper {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .content-page {
-            display: none;
-            padding: 40px;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .content-page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .content-section {
+        
+        h2 {
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 15px;
             margin-bottom: 40px;
         }
-
-        .content-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            color: #333;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-        }
-
-        .team-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
-        }
-
-        .member-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .member-card::before {
+        
+        h2::after {
             content: '';
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
-            right: 0;
+            width: 80px;
             height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background-color: var(--primary);
         }
-
-        .member-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        
+        h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
         }
-
-        .member-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .member-name {
-            text-align: center;
-            font-size: 1.4rem;
-            color: #333;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .member-role {
-            text-align: center;
-            color: #667eea;
-            font-size: 1rem;
+        
+        p {
             margin-bottom: 15px;
-            font-weight: 600;
+            color: var(--text-secondary);
         }
-
-        .member-info {
-            margin-bottom: 10px;
-        }
-
-        .member-info label {
-            font-weight: bold;
-            color: #555;
-            display: inline-block;
-            width: 80px;
-        }
-
-        .member-info span {
-            color: #666;
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, #f8f9ff, #f0f2ff);
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-
-        .highlight-box h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-
-        .highlight-box h4 {
-            color: #555;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-
-        .highlight-box p {
-            margin-bottom: 15px;
-            color: #555;
-            line-height: 1.7;
-        }
-
-        .highlight-box ul {
+        
+        ul {
             margin-left: 20px;
-            color: #555;
+            margin-bottom: 20px;
         }
-
-        .highlight-box li {
+        
+        li {
             margin-bottom: 8px;
-            line-height: 1.6;
+            color: var(--text-secondary);
         }
-
-        .pagination {
+        
+        /* Nút */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--bg-secondary);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px var(--shadow);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 40px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
         }
-
-        .nav-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        /* Nút chuyển đổi chế độ sáng/tối */
+        .theme-toggle {
+            background: none;
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
+            color: var(--text-primary);
+            font-size: 1.5rem;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .nav-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .nav-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .page-indicator {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .page-dot {
-            width: 12px;
-            height: 12px;
+            margin-right: 20px;
+            padding: 5px;
             border-radius: 50%;
-            background: #ddd;
-            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: all 0.3s ease;
         }
-
-        .page-dot.active {
-            background: #667eea;
-            transform: scale(1.2);
+        
+        .theme-toggle:hover {
+            background-color: var(--border-color);
         }
-
-        .page-info {
-            color: #666;
+        
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: var(--text-primary);
+            text-decoration: none;
             font-weight: 500;
-            margin: 0 15px;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+            position: relative;
         }
-
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
         .mobile-menu-btn {
             display: none;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1001;
-            background: #667eea;
-            color: white;
+            background: none;
             border: none;
-            padding: 12px;
-            border-radius: 50%;
+            color: var(--text-primary);
+            font-size: 1.5rem;
             cursor: pointer;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-
+        
+        /* Hero Section */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 100px;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        .hero h1 {
+            color: var(--text-primary);
+        }
+        
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .hero h2::after {
+            background-color: var(--accent);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Team Section */
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .team-member {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            padding: 25px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 6px var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px var(--shadow);
+        }
+        
+        .member-id {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .member-name {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        
+        /* Labs Section */
+        .labs-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .lab-card {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .lab-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+        
+        .lab-header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 20px;
+        }
+        
+        .lab-header h3 {
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .lab-content {
+            padding: 25px;
+        }
+        
+        .lab-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .lab-point {
+            background-color: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .lab-point:hover {
+            transform: translateX(5px);
+        }
+        
+        .lab-point h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        /* Summary Section */
+        .summary {
+            background-color: var(--bg-secondary);
+        }
+        
+        .summary-content {
+            background-color: var(--bg-card);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .highlight {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 25px;
+            border-radius: 6px;
+            margin: 25px 0;
+            border-left: 4px solid var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .footer-logo span {
+            color: var(--primary);
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
             }
-
-            .sidebar.active {
-                transform: translateX(0);
+            
+            .nav-container {
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 15px;
             }
-
+            
+            nav {
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+                width: 100%;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
             .mobile-menu-btn {
                 display: block;
             }
-
-            .main-content-area {
-                margin-left: 0;
-                padding: 70px 15px 15px;
+            
+            .hero {
+                padding-top: 200px;
             }
-
-            .content-header {
-                padding: 20px;
+            
+            .hero h1 {
+                font-size: 2.2rem;
             }
-
-            .content-header h1 {
-                font-size: 2rem;
-            }
-
-            .content-page {
-                padding: 20px;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-            }
-
-            .team-section {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .member-card {
-                padding: 20px;
-            }
-
-            .pagination {
-                padding: 20px;
+            
+            .team-members {
                 flex-direction: column;
-                gap: 15px;
+                align-items: center;
             }
-
-            .page-indicator {
-                order: -1;
+            
+            .lab-points {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-content {
+                padding: 25px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 0 15px;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .hero {
+                padding-top: 180px;
+                padding-bottom: 70px;
+            }
+            
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+            
+            h2 {
+                font-size: 1.7rem;
+            }
+            
+            .lab-content {
+                padding: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Mobile Menu Button -->
-    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
-
-    <!-- Sidebar -->
-    <nav class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h3>NHÓM 1</h3>
-        </div>
-        <ul class="nav-menu">
-            <li class="nav-item">
-                <a class="nav-link active" onclick="showPage(0)">
-                    <span class="nav-icon">👥</span>
-                    <span class="nav-text">Giới Thiệu Thành Viên</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="showPage(1)">
-                    <span class="nav-icon">☁️</span>
-                    <span class="nav-text">Cloud Computing</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="showPage(2)">
-                    <span class="nav-icon">🌐</span>
-                    <span class="nav-text">CDN & Hiệu Năng</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="showPage(3)">
-                    <span class="nav-icon">🔒</span>
-                    <span class="nav-text">Bảo Mật & Rủi Ro</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="showPage(4)">
-                    <span class="nav-icon">✅</span>
-                    <span class="nav-text">Giải Pháp Bảo Mật</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="showPage(5)">
-                    <span class="nav-icon">🔍</span>
-                    <span class="nav-text">Kiểm Tra An Toàn</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" onclick="showPage(6)">
-                    <span class="nav-icon">⚙️</span>
-                    <span class="nav-text">Workflow Chi Tiết</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- Main Content Area -->
-    <div class="main-content-area">
-        <div class="content-header">
-            <h1>KIẾN THỨC CLOUD COMPUTING & BẢO MẬT</h1>
-            <p>Tài liệu hướng dẫn về an toàn an ninh thông tin trong môi trường cloud</p>
-        </div>
-
-        <div class="main-content-wrapper">
-            <!-- Page 0: Team Introduction -->
-            <div class="content-page active" id="page-0">
-                <div class="content-section">
-                    <h2 class="section-title">👥 Giới Thiệu Thành Viên</h2>
-                    <div class="team-section">
-                        <!-- Thành viên 1 -->
-                        <div class="member-card">
-                            <div class="member-avatar">AT</div>
-                            <h2 class="member-name">Nguyễn Anh Tuấn</h2>
-                            <p class="member-role">22004004</p>
-                            <div class="member-info">
-                                <label>Chuyên ngành:</label>
-                                <span>An toàn an ninh thông tin</span>
-                            </div>
-                            <div class="member-info">
-                                <label>Email:</label>
-                                <span>22004004@st.vlute.edu.vn</span>
-                            </div>
-                        </div>
-
-                        <!-- Thành viên 2 -->
-                        <div class="member-card">
-                            <div class="member-avatar">HA</div>
-                            <h2 class="member-name">Trần Đại Triệu Hào Anh</h2>
-                            <p class="member-role">22004009</p>
-                            <div class="member-info">
-                                <label>Chuyên ngành:</label>
-                                <span>An toàn an ninh thông tin</span>
-                            </div>
-                            <div class="member-info">
-                                <label>Email:</label>
-                                <span>22004009@st.vlute.edu.vn</span>
-                            </div>
-                        </div>
-
-                        <!-- Thành viên 3 -->
-                        <div class="member-card">
-                            <div class="member-avatar">TK</div>
-                            <h2 class="member-name">Đặng Tuấn Kiệt</h2>
-                            <p class="member-role">22004278</p>
-                            <div class="member-info">
-                                <label>Chuyên ngành:</label>
-                                <span>An toàn an ninh thông tin</span>
-                            </div>
-                            <div class="member-info">
-                                <label>Email:</label>
-                                <span>22004278@st.vlute.edu.vn</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 1: Cloud Computing Basics -->
-            <div class="content-page" id="page-1">
-                <div class="content-section">
-                    <h2 class="section-title">☁️ Kiến Thức Cloud Computing</h2>
-                    
-                    <div class="highlight-box">
-                        <h3>1) Cloud Computing là gì?</h3>
-                        <p>Cloud computing = dùng dịch vụ máy tính (lưu trữ, phần mềm, database, máy chủ…) chạy trên máy chủ từ xa qua Internet thay vì cài trên máy tính cá nhân hay máy chủ nội bộ.</p>
-                        <p><strong>Lợi ích:</strong> dễ mở rộng (scale), tiết kiệm chi phí và quản lý tập trung</p>
-                    </div>
-
-                    <div class="highlight-box">
-                        <h3>2) IaaS / PaaS / SaaS khác nhau như thế nào?</h3>
-                        <ul>
-                            <li><strong>IaaS (Infrastructure as a Service):</strong> nhà cung cấp cho bạn hạ tầng (máy ảo, storage, mạng). Bạn quản lý hệ điều hành, ứng dụng. Ví dụ: thuê VM, block storage.</li>
-                            <li><strong>PaaS (Platform as a Service):</strong> nhà cung cấp cho nền tảng để dev + deploy (runtime, build tools). Bạn chỉ lo code. Ví dụ: dịch vụ hosting app, serverless platforms.</li>
-                            <li><strong>SaaS (Software as a Service):</strong> phần mềm dùng ngay do nhà cung cấp vận hành (email, CRM, Office online). Người dùng chỉ dùng/chạy, không quản lý hạ tầng.</li>
-                        </ul>
-                    </div>
-
-                    <div class="highlight-box">
-                        <h3>3) Website tĩnh thuộc mô hình nào trong cloud?</h3>
-                        <p>Website tĩnh (HTML/CSS/JS không cần server-side rendering) thường được triển khai trên dịch vụ hosting tĩnh / JAMstack — về ý nghĩa gần với PaaS / serverless static hosting (như Cloudflare Pages, Netlify, GitHub Pages). Ngoài ra nội dung tĩnh thường được phân phối qua CDN để đạt tốc độ cao.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 2: CDN & Performance -->
-            <div class="content-page" id="page-2">
-                <div class="content-section">
-                    <h2 class="section-title">🌐 CDN & Hiệu Năng</h2>
-                    
-                    <div class="highlight-box">
-                        <h3>4) Cloudflare Pages hoạt động theo cơ chế gì?</h3>
-                        <p>Bạn kết nối repo Git (GitHub/GitLab). Khi push code, Pages tự build (hoặc bạn upload asset đã build) và triển khai lên mạng biên (edge network) của Cloudflare.</p>
-                        <p>Pages hỗ trợ cả site tĩnh và "Pages Functions" (chạy mã nhẹ ở edge bằng Workers) để xử lý chút logic động mà không cần server truyền thống.</p>
-                    </div>
-
-                    <div class="highlight-box">
-                        <h3>5) CDN phân phối nội dung ra sao?</h3>
-                        <p>CDN là mạng máy chủ phân tán theo địa lý (POP/edge). Khi người dùng yêu cầu nội dung, CDN trả bản copy đã cache từ edge gần nhất, giảm độ trễ so với truy vấn origin server xa. Nếu edge không có, CDN sẽ lấy từ origin rồi cache để phục vụ lần sau. Đây là cách CDN phân phối và giảm tải cho origin.</p>
-                    </div>
-
-                    <div class="highlight-box">
-                        <h3>6) CDN có vai trò gì đối với hiệu năng và an toàn?</h3>
-                        <p><strong>Hiệu năng:</strong> giảm độ trễ (latency), tăng tốc tải trang, giảm băng thông cho origin, cải thiện trải nghiệm người dùng toàn cầu.</p>
-                        <p><strong>An toàn:</strong> nhiều CDN (như Cloudflare) có thêm lớp DDoS protection, WAF (Web Application Firewall), TLS/HTTPS, bot management — giúp giảm tấn công và chặn request độc hại trước khi tới origin. Tuy nhiên CDN không thay thế mọi biện pháp bảo mật.</p>
-                    </div>
-
-                    <div class="highlight-box">
-                        <h3>7) Ví dụ minh họa</h3>
-                        <p>Người dùng ở Hà Nội truy cập example.com/image.jpg → DNS + CDN chọn POP (edge) gần VN → trả image.jpg từ edge (không phải từ Mỹ). Lần đầu edge chưa có sẽ lấy từ origin, nhưng các lần sau sẽ được phục vụ nhanh hơn nhiều.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 3: Security & Risks -->
-            <div class="content-page" id="page-3">
-                <div class="content-section">
-                    <h2 class="section-title">🔒 Bảo Mật & Rủi Ro</h2>
-                    
-                    <div class="highlight-box">
-                        <h3>8) Những rủi ro bảo mật còn tồn tại?</h3>
-                        <p>Dù dùng cloud + CDN, vẫn còn rủi ro chính:</p>
-                        <ul>
-                            <li>Lỗ hổng ứng dụng web (SQLi, XSS, broken auth — OWASP Top 10).</li>
-                            <li>Cấu hình sai (misconfiguration): bucket public, header sai, SSL sai.</li>
-                            <li>Rò rỉ dữ liệu / quản lý quyền kém: IAM bị lỏng/lạm quyền.</li>
-                            <li>Cache poisoning / stale content nếu cache không cấu hình đúng.</li>
-                            <li>Phụ thuộc nhà cung cấp (vendor risk) / downtime.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 4: Security Solutions -->
-            <div class="content-page" id="page-4">
-                <div class="content-section">
-                    <h2 class="section-title">✅ Giải Pháp Bảo Mật</h2>
-                    
-                    <div class="highlight-box">
-                        <h3>9) Giải pháp (các bước thực tế dễ làm, ưu tiên theo thứ tự)</h3>
-                        <ul>
-                            <li>HTTPS + HSTS: bắt buộc, không dùng HTTP.</li>
-                            <li>WAF + Rate limiting: bật firewall, giới hạn tần suất truy cập để chống bot/DDoS.</li>
-                            <li>Quy tắc access / IAM chặt chẽ: chỉ cấp quyền cần thiết (least privilege). Dùng MFA cho tài khoản quản trị.</li>
-                            <li>Cấu hình cache đúng: set đúng Cache-Control, TTL, tránh cache dữ liệu nhạy cảm.</li>
-                            <li>Patch/update & dependency scanning: cập nhật thư viện, quét lỗ hổng.</li>
-                            <li>Kiểm thử ứng dụng + tuân thủ OWASP: chạy SAST/DAST, kiểm tra OWASP Top 10.</li>
-                            <li>Giám sát & logging: bật log truy cập, cảnh báo bất thường, phân tích traffic.</li>
-                            <li>Chuẩn bị fallback/đa vùng: nếu hệ thống quan trọng, cân nhắc multi-CDN hoặc backup origin.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 5: Security Audit -->
-            <div class="content-page" id="page-5">
-                <div class="content-section">
-                    <h2 class="section-title">🔍 Quy Trình Kiểm Tra An Toàn</h2>
-                    
-                    <div class="highlight-box">
-                        <h3>Mục tiêu của quy trình kiểm tra an toàn</h3>
-                        <ul>
-                            <li>Xác định các lỗ hổng dễ khai thác (cấu hình sai header, TLS, XSS, v.v.).</li>
-                            <li>Đánh giá hiệu năng & trải nghiệm người dùng (vì performance ảnh hưởng tới an toàn vận hành và khả năng chịu tải).</li>
-                            <li>Kiểm tra chuỗi cung ứng phần mềm (thư viện/ dependency có lỗ hổng).</li>
-                            <li>Đề xuất hành động khắc phục, ưu tiên theo rủi ro.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page 6: Detailed Workflow -->
-            <div class="content-page" id="page-6">
-                <div class="content-section">
-                    <h2 class="section-title">⚙️ Workflow Chi Tiết</h2>
-                    
-                    <div class="highlight-box">
-                        <h3>Quy trình kiểm tra (workflow chi tiết — bước theo thứ tự)</h3>
-                        
-                        <h4>1. Lập kế hoạch & phạm vi</h4>
-                        <p>Xác định endpoints, sitemap, repo code, thông tin chứng thực test (account thử nghiệm). Ghi rõ mức độ rủi ro chấp nhận được.</p>
-
-                        <h4>2. Thu thập thông tin (reconnaissance)</h4>
-                        <p>Lấy danh sách URL, header hiện tại, DNS, CDN/edge location, assets lớn.</p>
-
-                        <h4>3. Kiểm tra cấu hình nhanh (automated smoke tests)</h4>
-                        <ul>
-                            <li>Chạy SecurityHeaders để xem header thiếu/bất thường.</li>
-                            <li>Chạy PageSpeed/Lighthouse để lấy baseline hiệu năng và Core Web Vitals.</li>
-                        </ul>
-
-                        <h4>4. Kiểm tra lỗ hổng động & tĩnh</h4>
-                        <ul>
-                            <li>Dùng SAST/Code scanning (GitHub Advanced Security / code scanning) + Dependabot để check dependency.</li>
-                            <li>Dùng DAST nhẹ (burp/OWASP ZAP) để quét OWASP Top 10 (XSS, CSRF, auth issues).</li>
-                        </ul>
-
-                        <h4>5. Kiểm tra chính sách caching / CDN</h4>
-                        <p>Xem các header Cache-Control, TTL, và cách CDN (Cloudflare) cấu hình cache (tiered cache, cache rules). Sai cấu hình có thể gây leak dữ liệu nhạy cảm hoặc serving stale content.</p>
-
-                        <h4>6. Kiểm tra bảo mật transport</h4>
-                        <p>Kiểm tra TLS version, ciphers, HSTS; test redirect từ HTTP → HTTPS.</p>
-
-                        <h4>7. Kiểm tra an ninh biên (edge)</h4>
-                        <p>Kiểm tra WAF rules, rate-limiting, bot management (trên Cloudflare hoặc CDN tương tự).</p>
-
-                        <h4>8. Tổng hợp kết quả & phân loại rủi ro</h4>
-                        <p>Ghi issue, mức độ (High / Medium / Low), reproduce steps, ảnh chụp/ logs, đề xuất fix.</p>
-
-                        <h4>9. Remediation & re-test</h4>
-                        <p>Dev áp fix, deploy, clear cache/edge, re-run automated tests để confirm.</p>
-
-                        <h4>10. Giám sát liên tục</h4>
-                        <p>Bật logging, alert, RASP/WAF dashboard và periodic scans; tích hợp vào CI (Dependabot + code scanning bàn giao alert tới team).</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pagination -->
-            <div class="pagination">
-                <button class="nav-btn" id="prevBtn" onclick="changePage(-1)">
-                    ← Trước
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#home" class="logo">Cloud<span>Security</span> Việt</a>
+            <div class="nav-container">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Chuyển đổi chế độ sáng/tối">
+                    <i class="fas fa-moon"></i>
                 </button>
-                <div class="page-indicator">
-                    <div class="page-dot active" onclick="showPage(0)"></div>
-                    <div class="page-dot" onclick="showPage(1)"></div>
-                    <div class="page-dot" onclick="showPage(2)"></div>
-                    <div class="page-dot" onclick="showPage(3)"></div>
-                    <div class="page-dot" onclick="showPage(4)"></div>
-                    <div class="page-dot" onclick="showPage(5)"></div>
-                    <div class="page-dot" onclick="showPage(6)"></div>
-                </div>
-                <div class="page-info">
-                    <span id="pageInfo">1 / 7</span>
-                </div>
-                <button class="nav-btn" id="nextBtn" onclick="changePage(1)">
-                    Tiếp →
+                <button class="mobile-menu-btn" id="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
                 </button>
+                <nav id="main-nav">
+                    <ul>
+                        <li><a href="#home">Trang chủ</a></li>
+                        <li><a href="#team">Thành viên</a></li>
+                        <li><a href="#labs">Bài Lab</a></li>
+                        <li><a href="#summary">Tổng kết</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
-    </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Cloud Computing & Bảo Mật Labs</h1>
+            <h2>Tổng quan Dự án Nhóm</h2>
+            <p>Portfolio này trình bày công việc đã hoàn thành bởi nhóm chúng tôi trong việc khám phá các khái niệm điện toán đám mây, khung bảo mật và triển khai thực tế qua năm bài lab toàn diện.</p>
+            <a href="#labs" class="btn">Khám phá Bài Lab</a>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <div class="container">
+            <h2>Thành viên Nhóm</h2>
+            <p>Nhóm chúng tôi gồm ba thành viên đã hợp tác trong tất cả các bài lab và hoạt động nghiên cứu.</p>
+            
+            <div class="team-members">
+                <div class="team-member">
+                    <div class="member-id">22004009</div>
+                    <h3 class="member-name">Trần Đại Triệu Hào Anh</h3>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-id">22004004</div>
+                    <h3 class="member-name">Nguyễn Anh Tuấn</h3>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-id">22004278</div>
+                    <h3 class="member-name">Đặng Tuấn Kiệt</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Labs Section -->
+    <section id="labs">
+        <div class="container">
+            <h2>Tổng quan Bài Lab</h2>
+            <p>Chi tiết năm bài lab đã hoàn thành trong khóa học điện toán đám mây và bảo mật của chúng tôi.</p>
+            
+            <div class="labs-container">
+                <!-- Lab 1 -->
+                <div class="lab-card">
+                    <div class="lab-header">
+                        <h3>Lab 1: Giới thiệu về Cloud Computing và Bảo mật</h3>
+                    </div>
+                    <div class="lab-content">
+                        <p><strong>Nội dung chính:</strong></p>
+                        <div class="lab-points">
+                            <div class="lab-point">
+                                <h4>Khái niệm Cloud Computing</h4>
+                                <p>Khả năng mở rộng, tiết kiệm chi phí và quản lý tập trung</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>IaaS / PaaS / SaaS</h4>
+                                <p>Hiểu các mô hình dịch vụ đám mây khác nhau và ứng dụng của chúng</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Website tĩnh</h4>
+                                <p>Triển khai trên dịch vụ hosting tĩnh, tương tự PaaS</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Cloudflare Pages</h4>
+                                <p>Tự động xây dựng và triển khai mã lên mạng biên của Cloudflare</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>CDN</h4>
+                                <p>Phân phối nội dung nhanh chóng thông qua máy chủ phân tán gần người dùng</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Rủi ro & Giải pháp Bảo mật</h4>
+                                <p>Lỗ hổng ứng dụng, cấu hình sai, rò rỉ dữ liệu và chiến lược giảm thiểu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lab 2 -->
+                <div class="lab-card">
+                    <div class="lab-header">
+                        <h3>Lab 2: IAM và Zero Trust trong Bảo mật</h3>
+                    </div>
+                    <div class="lab-content">
+                        <p><strong>Nội dung chính:</strong></p>
+                        <div class="lab-points">
+                            <div class="lab-point">
+                                <h4>Xác thực vs. Ủy quyền</h4>
+                                <p>Xác minh danh tính so với hệ thống cấp phép truy cập</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>IAM (Quản lý Danh tính & Truy cập)</h4>
+                                <p>Quản lý danh tính và quyền truy cập để đảm bảo quyền hạn phù hợp</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Mô hình Zero Trust</h4>
+                                <p>Bảo mật dựa trên nguyên tắc "không bao giờ tin tưởng, luôn xác minh"</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Giao thức Bảo mật</h4>
+                                <p>Triển khai SSO, OAuth 2.0, OIDC, SAML</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Phương thức Xác thực Hiện đại</h4>
+                                <p>Xác thực đa yếu tố (MFA), xác thực không mật khẩu, xác thực thích ứng</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Mô hình Truyền thống vs. Zero Trust</h4>
+                                <p>So sánh bảo mật dựa trên tường lửa với cách tiếp cận Zero Trust</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lab 3 -->
+                <div class="lab-card">
+                    <div class="lab-header">
+                        <h3>Lab 3: Rủi ro Bảo mật và Kiểm tra OWASP</h3>
+                    </div>
+                    <div class="lab-content">
+                        <p><strong>Nội dung chính:</strong></p>
+                        <div class="lab-points">
+                            <div class="lab-point">
+                                <h4>OWASP Top 10</h4>
+                                <p>Các lỗ hổng bảo mật ứng dụng web chính</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>OWASP Juice Shop</h4>
+                                <p>Ứng dụng thực hành khai thác lỗ hổng bảo mật</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Rủi ro & Cải thiện Bảo mật</h4>
+                                <p>Ví dụ như "Kiểm soát Truy cập Bị hỏng" và "SQL Injection"</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Quy trình Kiểm tra An toàn</h4>
+                                <p>Các bước từ lập kế hoạch, thu thập thông tin, kiểm tra lỗ hổng đến tổng hợp kết quả</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lab 4 -->
+                <div class="lab-card">
+                    <div class="lab-header">
+                        <h3>Lab 4: Monitoring và Logging trong Bảo mật</h3>
+                    </div>
+                    <div class="lab-content">
+                        <p><strong>Nội dung chính:</strong></p>
+                        <div class="lab-points">
+                            <div class="lab-point">
+                                <h4>Khái niệm Monitoring & Logging</h4>
+                                <p>Tác động đến quản lý hệ thống và phản ứng sự cố</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Vai trò của Monitoring & Logging</h4>
+                                <p>Theo dõi người dùng, phiên đăng nhập và độ tin cậy ứng dụng</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Khác biệt giữa Monitoring & Logging</h4>
+                                <p>Trọng tâm, dữ liệu, hành động và ví dụ cụ thể</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Phân tích Sự cố</h4>
+                                <p>Cách phản ứng khi phát hiện lỗi và điều tra nguyên nhân gốc</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Lỗi cần Giám sát & Kiểm tra</h4>
+                                <p>Phát hiện hành vi bất thường và cải thiện bảo mật</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lab 5 -->
+                <div class="lab-card">
+                    <div class="lab-header">
+                        <h3>Lab 5: Xử lý Sự cố (Incident Response)</h3>
+                    </div>
+                    <div class="lab-content">
+                        <p><strong>Nội dung chính:</strong></p>
+                        <div class="lab-points">
+                            <div class="lab-point">
+                                <h4>Khái niệm Xử lý Sự cố</h4>
+                                <p>Xử lý sự cố bảo mật và vai trò của nó trong môi trường đám mây</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Chu trình NIST</h4>
+                                <p>Các giai đoạn từ chuẩn bị, phát hiện đến ngăn chặn sự cố</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Vai trò của Công cụ Giám sát & Ghi nhật ký</h4>
+                                <p>Xác định chỉ số và phản ứng kịp thời với sự cố</p>
+                            </div>
+                            <div class="lab-point">
+                                <h4>Cấu hình & Cải thiện</h4>
+                                <p>Các bước và biện pháp giảm thiểu rủi ro và cải thiện an ninh mạng</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Summary Section -->
+    <section class="summary" id="summary">
+        <div class="container">
+            <h2>Tổng kết Dự án</h2>
+            <div class="summary-content">
+                <p>Portfolio này cung cấp cái nhìn tổng quát về nội dung và chủ đề chính trong năm bài lab của khóa học điện toán đám mây và bảo mật.</p>
+                
+                <div class="highlight">
+                    <h3>Điểm quan trọng</h3>
+                    <p>Thông qua các bài lab, nhóm chúng tôi đã có được kinh nghiệm thực tế trong:</p>
+                    <ul>
+                        <li>Hiểu các mô hình điện toán đám mây (IaaS, PaaS, SaaS) và tác động bảo mật của chúng</li>
+                        <li>Triển khai nguyên tắc bảo mật IAM và Zero Trust</li>
+                        <li>Xác định và giảm thiểu các lỗ hổng bảo mật OWASP Top 10</li>
+                        <li>Thiết lập giám sát và ghi nhật ký để phát hiện sự cố bảo mật</li>
+                        <li>Phát triển kế hoạch xử lý sự cố dựa trên khung NIST</li>
+                    </ul>
+                </div>
+                
+                <p>Kinh nghiệm thực hành với các công cụ như Cloudflare Pages, OWASP Juice Shop và các giải pháp giám sát bảo mật khác nhau đã cung cấp những hiểu biết quý giá về các thách thức và giải pháp bảo mật đám mây trong thế giới thực.</p>
+                
+                <p>Cách tiếp cận toàn diện này trong giáo dục bảo mật đám mây đã chuẩn bị cho nhóm chúng tôi giải quyết hiệu quả các thách thức bảo mật hiện đại trong môi trường đám mây.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">Cloud<span>Security</span> Việt</div>
+                <p>Dự án Portfolio Điện toán Đám mây & Bảo mật</p>
+                <p>Thành viên: Trần Đại Triệu Hào Anh | Nguyễn Anh Tuấn | Đặng Tuấn Kiệt</p>
+            </div>
+            <div class="copyright">
+                &copy; 2023 Cloud Security Labs Portfolio. Đã đăng ký bản quyền.
+            </div>
+        </div>
+    </footer>
 
     <script>
-        let currentPage = 0;
-        const totalPages = 7;
-
-        function showPage(pageIndex) {
-            // Hide all pages
-            const pages = document.querySelectorAll('.content-page');
-            pages.forEach(page => page.classList.remove('active'));
+        // Chức năng chuyển đổi chế độ sáng/tối
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Kiểm tra cài đặt chủ đề đã lưu hoặc sở thích hệ thống
+        const savedTheme = localStorage.getItem('theme') || 
+                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // Áp dụng chủ đề đã lưu
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        
+        // Xử lý sự kiện chuyển đổi chủ đề
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
             
-            // Show selected page
-            document.getElementById(`page-${pageIndex}`).classList.add('active');
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        // Cập nhật biểu tượng chủ đề
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                themeToggle.setAttribute('aria-label', 'Chuyển sang chế độ sáng');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                themeToggle.setAttribute('aria-label', 'Chuyển sang chế độ tối');
+            }
+        }
+        
+        // Menu di động
+        const mobileMenuBtn = document.getElementById('mobile-menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Cuộn mượt cho các liên kết điều hướng
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                
+                // Đóng menu di động nếu đang mở
+                if (mainNav.classList.contains('active')) {
+                    mainNav.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+        
+        // Cập nhật liên kết điều hướng đang hoạt động dựa trên vị trí cuộn
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
             
-            // Update navigation
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => link.classList.remove('active'));
-            navLinks[pageIndex].classList.add('active');
+            let current = '';
             
-            // Update pagination dots
-            const dots = document.querySelectorAll('.page-dot');
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === pageIndex);
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
             });
             
-            // Update page info
-            document.getElementById('pageInfo').textContent = `${pageIndex + 1} / ${totalPages}`;
-            
-            // Update button states
-            document.getElementById('prevBtn').disabled = pageIndex === 0;
-            document.getElementById('nextBtn').disabled = pageIndex === totalPages - 1;
-            
-            currentPage = pageIndex;
-            
-            // Close sidebar on mobile after navigation
-            if (window.innerWidth <= 768) {
-                document.getElementById('sidebar').classList.remove('active');
-            }
-        }
-
-        function changePage(direction) {
-            const newPage = currentPage + direction;
-            if (newPage >= 0 && newPage < totalPages) {
-                showPage(newPage);
-            }
-        }
-
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowLeft') changePage(-1);
-            if (e.key === 'ArrowRight') changePage(1);
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
         });
-
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', function(e) {
-            const sidebar = document.getElementById('sidebar');
-            const menuBtn = document.querySelector('.mobile-menu-btn');
-            
-            if (window.innerWidth <= 768 && 
-                !sidebar.contains(e.target) && 
-                !menuBtn.contains(e.target) &&
-                sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
+        
+        // Tự động đóng menu khi nhấp ra ngoài (cho thiết bị di động)
+        document.addEventListener('click', (e) => {
+            if (mainNav.classList.contains('active') && 
+                !e.target.closest('nav') && 
+                !e.target.closest('.mobile-menu-btn')) {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             }
         });
-
-        // Initialize
-        showPage(0);
     </script>
-    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "81544366c6434bbb9575d6b07b6e47d5"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
